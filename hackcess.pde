@@ -11,7 +11,7 @@ void setup() {
   mixMonoReg = createFont("TheMixMono-Regular.otf", 100); //on vient charger la typo en corps 100
   textFont(mixMonoReg); //on attribue cette typo au texte
   fill(0); // typo en noir
-
+  noCursor();
   message(); //on appelle la fonction message()
   refreshScreen(); // on appelle la fonction refreshScreen()
 }
@@ -48,8 +48,11 @@ void refreshScreen() { // fonction refreshScreen()
   int b = y; // on définit la position du message à la base en y
   for (int i = messages.size()-1; i >= 0; i--) { //largeur de l'ArrayList messages correspond à (messages.size()). (taille-1) pour qu'on commence par la fin et on décrémente (i--) pour afficher le dernier message entré dans l'ArrayList 
     text(messages.get(i), a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
-    b -= 80; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
+    b -= 100; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
   }
+  noStroke();
+  rect(0, 870, width, 30); 
+  fill(0);
 }
 
 void mousePressed() {

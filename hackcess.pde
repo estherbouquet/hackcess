@@ -24,7 +24,7 @@ void message() { //fonction message
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
   int salutation = int(random(Salutations.length)); //idem mais avec les phrases  
 
-  String Message = Subjects[subject]+ "\n" +Salutations[salutation]; // on crée un message avec subject+salutation
+  String Message = Subjects[subject]+ "\n" +"\""+Salutations[salutation]+"\""; // on crée un message avec subject+salutation
   println(Message); //on imprime le message dans la console de debug
 
   background(255); // on rafraîchit le background pour effacer le texte d'avant

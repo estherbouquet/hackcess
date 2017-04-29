@@ -27,7 +27,7 @@ void message() { //fonction message
   String Message = Subjects[subject]+ "\n" +Salutations[salutation]; // on crée un message avec subject+salutation
   println(Message); //on imprime le message dans la console de debug
 
-  background(0); // on rafraîchit le background pour effacer le texte d'avant
+  background(255); // on rafraîchit le background pour effacer le texte d'avant
   textSize(30); //on choisit le corps 30
   text(Message, 10, 100); // la valeur de text sera le Message créé et sera positionné à x=10 et y=100 
 }

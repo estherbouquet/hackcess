@@ -1,10 +1,10 @@
 PFont mixMonoReg;
-//PFont mixMonoExtBold;
+PFont mixMonoXBold;
 int x=10;
 int y=800;
 
 float angle = 0.00;
-float speed = 0.015;
+float speed = 0.02;
 
 ArrayList<String> messages = new ArrayList();
 
@@ -13,6 +13,7 @@ void setup() {
   size(500, 900); // taille fenêtre
   background(255); //car sinon chargement d'un fond gris pas beau
   mixMonoReg = createFont("TheMixMono-Regular.otf", 100); //on vient charger la typo en corps 100
+  mixMonoXBold = createFont("TheMixMono-XBold.otf", 100);  
   textFont(mixMonoReg); //on attribue cette typo au texte
   noCursor();
   message(); //on appelle la fonction message()
@@ -71,8 +72,8 @@ void refreshScreen() { // fonction refreshScreen()
 
   /*barre du haut*/
   noStroke();
-  fill(255);
-  rect(0, 0, width, 35);
+  fill(255,0,0);
+  rect(0, 0, width, 70);
 
   /*barre du bas*/
   noStroke();

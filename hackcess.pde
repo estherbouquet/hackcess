@@ -12,7 +12,7 @@ ArrayList<String> messages = new ArrayList();
 void setup() {
   size(500, 900); // taille fenêtre
   background(255); //car sinon chargement d'un fond gris pas beau
-  mixMonoReg = createFont("TheMixMono-Regular.otf", 100); //on vient charger la typo en corps 100
+  mixMonoReg = createFont("TheMixMono-Regular.otf", 25); //on vient charger la typo en corps 100
   mixMonoXBold = createFont("TheMixMono-XBold.otf", 100);  
   textFont(mixMonoReg); //on attribue cette typo au texte
   noCursor();
@@ -66,14 +66,21 @@ void refreshScreen() { // fonction refreshScreen()
   int a = x; // on définit la position du message à la base en x
   int b = y; // on définit la position du message à la base en y
   for (int i = messages.size()-1; i >= 0; i--) { //largeur de l'ArrayList messages correspond à (messages.size()). (taille-1) pour qu'on commence par la fin et on décrémente (i--) pour afficher le dernier message entré dans l'ArrayList 
+    textAlign(LEFT);
+    textFont(mixMonoReg);
     text(messages.get(i), a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
     b -= 70; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
   }
 
   /*barre du haut*/
   noStroke();
-  fill(255,0,0);
+  fill(255);
   rect(0, 0, width, 70);
+  textFont(mixMonoXBold);
+  fill(0);
+  textSize(15);
+  textAlign(CENTER);
+  text("HACK/CESS", width/2, 20);//on attribue cette typo au texte*/
 
   /*barre du bas*/
   noStroke();

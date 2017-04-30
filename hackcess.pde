@@ -1,10 +1,10 @@
 PFont mixMonoReg;
 PFont mixMonoXBold;
 int x=10;
-int y=800;
+int y=840;
 
 float angle = 0.00;
-float speed = 0.02;
+float speed = 0.05;
 
 ArrayList<String> messages = new ArrayList();
 
@@ -16,6 +16,8 @@ void setup() {
   mixMonoXBold = createFont("TheMixMono-XBold.otf", 100);  
   textFont(mixMonoReg); //on attribue cette typo au texte
   noCursor();
+
+  noStroke();
   message(); //on appelle la fonction message()
   refreshScreen(); // on appelle la fonction refreshScreen()
 }
@@ -23,17 +25,16 @@ void setup() {
 void draw() {
 
   /*cercle qui simule le chargement*/
-  stroke(0, 40); // ! ne marche pas si pas de contour -> pourquoi ? Je ne sais pas
+  stroke(180, 10); // ! ne marche pas si pas de contour -> pourquoi ? Je ne sais pas
   //noStroke();
-  fill(255, 100); // blanc + opacité de 100 
-  float d1 = (45 + (sin(angle) * 45))/4; 
-  ellipse(width/2, height-18, d1, d1);
-  float d2 = (45 + (sin(angle + QUARTER_PI) * 45))/4;
-  ellipse(width/2, height-18, d2, d2);
-  float d3 = (45 + (sin(angle + HALF_PI) * 45))/4;
-  ellipse(width/2, height-18, d3, d3);
+  fill(0, 10); // blanc + opacité de 100 
+  float d1 = 65 + (sin(angle) * 45);
+  ellipse(width/2, 45, d1/4.5, d1/4.5);
+  float d2 = 65 + (sin(angle + QUARTER_PI) * 45);
+  ellipse(width/2, 45, d2/4.5, d2/4.5);
+  float d3 = 65 + (sin(angle + HALF_PI) * 45);
+  ellipse(width/2, 45, d3/4.5, d3/4.5);
   angle += speed;
-  
 }
 
 
@@ -53,7 +54,7 @@ void message() { //fonction message()
   println(Message); //on imprime le message dans la console de debug
 
   // background(255); // on rafraîchit le background pour effacer le texte d'avant
-  textSize(25); //on choisit le corps 30
+  textSize(24); //on choisit le corps 30
   fill(0); // on met la typo en noir ! car sinon, même couleur que le cercle, et donc invisible
   messages.add(Message);
   if (messages.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
@@ -75,17 +76,18 @@ void refreshScreen() { // fonction refreshScreen()
   /*barre du haut*/
   noStroke();
   fill(255);
-  rect(0, 0, width, 70);
+  rect(0, 0, width, 60);
   textFont(mixMonoXBold);
   fill(0);
   textSize(15);
   textAlign(CENTER);
-  text("HACK/CESS", width/2, 20);//on attribue cette typo au texte*/
-
-  /*barre du bas*/
-  noStroke();
-  fill(0);
-  rect(0, 865, width, 35);
+  text("[HACK/CESS]", width/2, 22);//on attribue cette typo au texte*/
+  /*
+  //barre du bas
+   noStroke();
+   fill(0);
+   rect(0, 865, width, 35);
+   */
 }
 
 void mousePressed() {

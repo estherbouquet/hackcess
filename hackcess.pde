@@ -76,7 +76,7 @@ void refreshScreen() { // fonction refreshScreen()
   /*barre du haut*/
   noStroke();
   fill(255);
-  rect(0, 0, width, 60);
+  rect(0, 0, width, 40);
   textFont(mixMonoXBold);
   fill(0);
   textSize(15);

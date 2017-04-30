@@ -3,6 +3,9 @@ PFont mixMonoReg;
 int x=10;
 int y=800;
 
+float angle = 0.00;
+float speed = 0.015;
+
 ArrayList<String> messages = new ArrayList();
 
 
@@ -11,14 +14,27 @@ void setup() {
   background(255); //car sinon chargement d'un fond gris pas beau
   mixMonoReg = createFont("TheMixMono-Regular.otf", 100); //on vient charger la typo en corps 100
   textFont(mixMonoReg); //on attribue cette typo au texte
-  fill(0); // typo en noir
   noCursor();
   message(); //on appelle la fonction message()
   refreshScreen(); // on appelle la fonction refreshScreen()
 }
 
 void draw() {
+
+  /*cercle qui simule le chargement*/
+  stroke(0, 40); // ! ne marche pas si pas de contour -> pourquoi ? Je ne sais pas
+  //noStroke();
+  fill(255, 100); // blanc + opacité de 100 
+  float d1 = (45 + (sin(angle) * 45))/4; 
+  ellipse(width/2, height-18, d1, d1);
+  float d2 = (45 + (sin(angle + QUARTER_PI) * 45))/4;
+  ellipse(width/2, height-18, d2, d2);
+  float d3 = (45 + (sin(angle + HALF_PI) * 45))/4;
+  ellipse(width/2, height-18, d3, d3);
+  angle += speed;
+  
 }
+
 
 void message() { //fonction message()
   String[] Subjects={
@@ -37,6 +53,7 @@ void message() { //fonction message()
 
   // background(255); // on rafraîchit le background pour effacer le texte d'avant
   textSize(25); //on choisit le corps 30
+  fill(0); // on met la typo en noir
   messages.add(Message);
   if (messages.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messages.remove(messages.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
@@ -51,15 +68,16 @@ void refreshScreen() { // fonction refreshScreen()
     text(messages.get(i), a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
     b -= 70; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
   }
-  
+
+  /*barre du haut*/
   noStroke();
   fill(255);
-  rect(0,0,width, 35);
-  
+  rect(0, 0, width, 35);
+
+  /*barre du bas*/
   noStroke();
   fill(0);
-  rect(0, 865, width, 35); 
-  
+  rect(0, 865, width, 35);
 }
 
 void mousePressed() {

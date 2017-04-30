@@ -53,7 +53,7 @@ void message() { //fonction message()
 
   // background(255); // on rafraîchit le background pour effacer le texte d'avant
   textSize(25); //on choisit le corps 30
-  fill(0); // on met la typo en noir
+  fill(0); // on met la typo en noir ! car sinon, même couleur que le cercle, et donc invisible
   messages.add(Message);
   if (messages.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messages.remove(messages.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut

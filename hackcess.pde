@@ -24,7 +24,7 @@ void setup() {
   size(500, 900); // taille fenêtre
   background(c1); //car sinon chargement d'un fond gris pas beau
 
-  mixMonoReg = createFont("TheMixMono-SemiBold.otf", 20); //on vient charger la typo en corps 20
+  mixMonoReg = createFont("TheMixMono-Bold.otf", 20); //on vient charger la typo en corps 20
   mixMonoXBold = createFont("TheMixMono-XBold.otf", 23);  // idem corps 23
 
   noCursor(); // pas de curseur apparant dans la fenêtre

@@ -50,10 +50,14 @@ void draw() {
 
 void message() { //fonction message()
   String[] Subjects={
-    "Marie", "Jules", "Paul", "Alex", "Axel", "Ezra", "Lou", "Tristan", "Quentin", "Léa", "Max"
+    "Marie", "Jules", "Paul", "Alex", "Axel", "Ezra", "Lou", "Tristan", "Quentin", "Léa", "Max", "Ninon", "Marc"
   }; // on crée un tableau de String qui regroupe tous les prénoms
   String[] Salutations={
     "Hello world", "Hello", "Coucou", "Salut", "Hi", "Salut, ça va ?", "Bonjour"
+  }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
+
+  String[] Twitter={
+    "#BackOnTwitter", "Bien le bonjour Twitter", "Twitter c'était mieux avant", "On voit que ça sur Twitter", "#TeamTwitter", "00", "00"
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
@@ -85,13 +89,13 @@ void refreshScreen() { // fonction refreshScreen()
   noStroke();
   fill(c1);
   rect(0, 0, width, 40);
-  
+
   textFont(mixMonoReg);
   fill(c3);
   textSize(15);
   textAlign(CENTER);
   text("[HACK/CESS]", width/2, 22);//on attribue cette typo au texte*/
-  
+
   /*
   //barre du bas
    noStroke();

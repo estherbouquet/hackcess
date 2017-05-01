@@ -72,15 +72,19 @@ void loadMessage() { //fonction message()
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   String[] Twitter={
-    "#BackOnTwitter", "Bien le bonjour Twitter", "Twitter, c'était mieux avant", "On voit que ça sur Twitter", "#TeamTwitter", "00", "00"
+    "#BackOnTwitter", "Bien le bonjour chers twittos", "@Twitter, c'était mieux avant", 
+    "#TeamTwitter", "#FollowBack ?", "Quels sont les derniers #TT ?", "Salut Twitter !", 
+    "Mon avis tient en 140 signes.", "Quoi de neuf dans ma #TL ?", "Going on @Twitter via @hackcess", 
+    "On peut se parler par #DM", "Oh, un nouveau #RT", "#FF @hackcess"
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
   int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
+  int twitter = int(random(Twitter.length));
 
   String messageSubject = Subjects[subject]; // on crée un message avec subject+salutation
   println(messageSubject); //on imprime le message dans la console de debug au cas-où
-  String messageSentence = "«"+Salutations[salutation]+"»";
+  String messageSentence = "«"+Twitter[twitter]+"»";
   println(messageSentence);
 
   messagesPart1.add(messageSubject);

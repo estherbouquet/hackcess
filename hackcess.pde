@@ -12,8 +12,8 @@ float angle = 0.00;
 float speed = 0.04;
 
 //VARIABLES COULEURS
-color c2 = color(231, 205, 112); // couleur background
-color c1 = color (99, 132, 247); //(45, 77, 131) // couleur flux de texte (99, 132, 247)
+color c1 = color (70, 100, 217); // couleur background
+color c2 = color(231, 205, 112); // couleur flux de texte
 color c3 = color(255); // couleur [HACK/CESS] + cercle
 
 ArrayList<String> messagesPart1 = new ArrayList(); // correspond aux prénoms

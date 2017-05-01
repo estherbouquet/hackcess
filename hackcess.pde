@@ -55,7 +55,15 @@ void top_bar() {
 
 void loadMessage() { //fonction message()
   String[] Subjects={
-    "Marie", "Jules", "Paul", "Alex", "Axel", "Ezra", "Lou", "Tristan", "Quentin", "Léa", "Max", "Ninon", "Marc"
+    "Marie", "Lou", "Nina", "Marion", "Lisa",
+    "Anna", "Flo", "Alice", "Emma", "Louise", 
+    "Lola", "Lucie", "Eva", "Rose", "Elsa",
+    "Sarah", "Alicia", "Lily", "Luna", "Alix",
+    "Lucas", "Hugo", "Tom", "Sacha", "Eliot",
+    "Jules", "Paul", "Alex", "Axel", "Ezra", 
+    "Dorian", "Diego", "Charles", "Max", "Marc", 
+    "Will", "Isaac", "Victor", "Sam", "Mathis"
+
   }; // on crée un tableau de String qui regroupe tous les prénoms
 
   String[] Salutations={
@@ -63,7 +71,7 @@ void loadMessage() { //fonction message()
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   String[] Twitter={
-    "#BackOnTwitter", "Bien le bonjour Twitter", "Twitter c'était mieux avant", "On voit que ça sur Twitter", "#TeamTwitter", "00", "00"
+    "#BackOnTwitter", "Bien le bonjour Twitter", "Twitter, c'était mieux avant", "On voit que ça sur Twitter", "#TeamTwitter", "00", "00"
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau

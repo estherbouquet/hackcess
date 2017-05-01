@@ -5,6 +5,7 @@ PFont mixMonoXBold;
 // VARIABLES FLUX DE TEXTE
 int x = 10;
 int y = 830;
+int e = 5;
 
 // VARIABLES POUR LE CERCLE
 float angle = 0.00;
@@ -79,7 +80,7 @@ void loadMessage() { //fonction message()
 
   String messageSubject = Subjects[subject]; // on crée un message avec subject+salutation
   println(messageSubject); //on imprime le message dans la console de debug au cas-où
-  String messageSentence = "/"+Salutations[salutation];
+  String messageSentence = "«"+Salutations[salutation]+"»";
   println(messageSentence);
 
   messagesPart1.add(messageSubject);

@@ -63,14 +63,15 @@ void loadMessage() { //fonction message()
   }; // on crée un tableau de String qui regroupe tous les prénoms
 
   String[] Salutations={
-    "Hello world", "Hello", "Coucou", "Salut", "Hi", "Salut, ça va ?", "Bonjour", "Eh oh, je suis là !"
+    "Hello world", "Hello", "Coucou", "Salut", "Hi", 
+    "Salut, ça va ?", "Bonjour", "Eh oh, je suis là !"
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   String[] Twitter={
     "#BackOnTwitter", "Bien le bonjour chers twittos", "@Twitter, c'est mieux qu'avant", 
     "#TeamTwitter", "#FollowBack ?", "Quels sont les derniers #TT ?", "Salut Twitter !", 
     "Mon avis tient en 140 signes.", "Quoi de neuf dans ma #TL ?", "Going on @Twitter via @hackcess", 
-    "On peut se parler par #DM", "Oh, un nouveau #RT", "#FF @hackcess", "J'actualise en ce moment ma #TL"
+    "On peut se parler par #DM", "Oh, un nouveau #RT", "#FF @project_hackcess", "J'actualise en ce moment ma #TL"
   }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
@@ -78,7 +79,7 @@ void loadMessage() { //fonction message()
   int twitter = int(random(Twitter.length));
 
   String messageSubject = Subjects[subject]; // on crée un messageSubject avec subject
-  println(messageSubject); //on imprime le message dans la console de debug au cas-où
+  println(subject+ " " +messageSubject); //on imprime le message dans la console de debug au cas-où
   String messageSentence = "«"+Twitter[twitter]+"»"; // on crée un messageSentence avec twitter
   println(messageSentence);
 

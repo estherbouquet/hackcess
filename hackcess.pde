@@ -33,7 +33,24 @@ void setup() {
   refreshScreen(); // on appelle la fonction refreshScreen()
 }
 
+void scanIP(){
+ //println("coucou"); // ce que m'aura filé Quentin 
+}
+
 void draw() {
+  thread("scanIP"); // mettre nom de la fonction pour avoir un thread
+
+  //barre du haut
+  noStroke();
+  fill(c1);
+  rect(0, 0, width, 30);
+
+  textFont(mixMonoReg); //on attribue cette typo au texte
+  fill(c3);
+  textSize(15);
+  textAlign(CENTER);
+  text("[HACK/CESS]", width/2, 22);
+
 
   // CERCLE QUI SIMULE CHARGEMENT
   stroke(190, 20); // ! ne marche pas si pas de contour -> pourquoi ? Je ne sais pas
@@ -80,27 +97,29 @@ void loadMessage() { //fonction message()
 
   String messageSubject = Subjects[subject]; // on crée un messageSubject avec subject
   println(subject+ " " +messageSubject); //on imprime le message dans la console de debug au cas-où
-  String messageSentence = "«"+Twitter[twitter]+"»"; // on crée un messageSentence avec twitter
+  String messageSentence = "« "+Twitter[twitter]+" »"; // on crée un messageSentence avec twitter
   println(messageSentence);
 
   messagesPart1.add(messageSubject); //on divise le message en 2. Part1=le prénom
-  if (messagesPart1.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
+  if (messagesPart1.size()>15) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messagesPart1.remove(messagesPart1.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
   }
 
   messagesPart2.add(messageSentence); //Part2=la phrase prononcée
-  if (messagesPart2.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
+  if (messagesPart2.size()>15) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messagesPart2.remove(messagesPart2.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
   }
 }
 
 void refreshScreen() { // fonction refreshScreen()
-  background(c1);
+  fill(c1);
+  noStroke();
+  rect(0, 30, width, height-30);
 
   int a = x; // on définit la position du message à la base en x
   int b = y; // on définit la position du message à la base en y
   int c = x+10;
-  int d = b+30;
+  int d = b+26;
 
   for (int i = messagesPart1.size()-1; i >= 0; i--) { //largeur de l'ArrayList messagesPart1 correspond à (messagesPart1.size()). (taille-1) pour qu'on commence par la fin et on décrémente (i--) pour afficher le dernier message entré dans l'ArrayList 
     textAlign(LEFT);
@@ -109,26 +128,24 @@ void refreshScreen() { // fonction refreshScreen()
     text(messagesPart1.get(i), a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
     b -=70; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
   }
-
   for (int i = messagesPart2.size()-1; i >= 0; i--) { //largeur de l'ArrayList messagesPart2 correspond à (messagesPart2.size()). (taille-1) pour qu'on commence par la fin et on décrémente (i--) pour afficher le dernier message entré dans l'ArrayList 
+    String currentMessage = messagesPart2.get(i);
+
     textAlign(LEFT);
     textSize(15);
     textFont(mixMonoReg);
     fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
-    text(messagesPart2.get(i), c, d); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
+    //text(messagesPart2.get(i), c, d); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
+
+    for (int j = 0; j < currentMessage.length(); j++) {
+      textSize(random(15, 22));
+      text(currentMessage.charAt(j), c, d); // text("Ceci est mon texte", x, y);
+      // textWidth() spaces the characters out properly.
+      c += textWidth(currentMessage.charAt(j));
+    }
+    c=x+10;
     d -=70; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
   }
-
-  //barre du haut
-  noStroke();
-  fill(c1);
-  rect(0, 0, width, 30);
-
-  textFont(mixMonoReg); //on attribue cette typo au texte
-  fill(c3);
-  textSize(15);
-  textAlign(CENTER);
-  text("[HACK/CESS]", width/2, 22);
 
 
   //barre du bas

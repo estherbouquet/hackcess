@@ -2,9 +2,18 @@
 PFont mixMonoReg;
 PFont mixMonoXBold;
 
+// TAILLE FENETRE
+final int FRAMEWIDTH = 500;
+final int FRAMEHEIGHT = 500;
+
+/*On donne les bornes de l'interval dans lequel peut se situer la taille 
+de la police de la seconde partie du message*/
+final int MINFONT=30;
+final int MAXFONT=40;
+
 // VARIABLES FLUX DE TEXTE
 int x = 10;
-int y = 830;
+int y = FRAMEHEIGHT-70-3*MAXFONT;
 int e = 5;
 
 // VARIABLES POUR LE CERCLE
@@ -20,8 +29,13 @@ ArrayList<String> messagesPart1 = new ArrayList(); // correspond aux prénoms
 ArrayList<String> messagesPart2 = new ArrayList(); // correspond aux phrases écrites
 
 
+void settings(){
+  //On place la fonction size dans settings au lieu de setup afin de pouvoir utiliser des variables comme paramètres
+  size(FRAMEWIDTH, FRAMEHEIGHT); // taille fenêtre
+}
+
 void setup() {
-  size(500, 900); // taille fenêtre
+  
   background(c1); //car sinon chargement d'un fond gris pas beau
 
   mixMonoReg = createFont("TheMixMono-Bold.otf", 20); //on vient charger la typo en corps 20
@@ -114,37 +128,52 @@ void loadMessage() { //fonction message()
 void refreshScreen() { // fonction refreshScreen()
   fill(c1);
   noStroke();
-  rect(0, 30, width, height-30);
+  rect(0, 30, width, height-30);//Refresh l'écran sans masquer le rond du haut
 
   int a = x; // on définit la position du message à la base en x
   int b = y; // on définit la position du message à la base en y
-  int c = x+10;
-  int d = b+26;
-
-  for (int i = messagesPart1.size()-1; i >= 0; i--) { //largeur de l'ArrayList messagesPart1 correspond à (messagesPart1.size()). (taille-1) pour qu'on commence par la fin et on décrémente (i--) pour afficher le dernier message entré dans l'ArrayList 
-    textAlign(LEFT);
+  /*int c = x+PADDING;
+  int d = b+26;*/
+  
+  for(int i = messagesPart1.size()-1; i>=0; i--){//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
+    String currentName = messagesPart1.get(i);
     textFont(mixMonoXBold);
+    textAlign(LEFT);
     fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
-    text(messagesPart1.get(i), a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
-    b -=70; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
-  }
-  for (int i = messagesPart2.size()-1; i >= 0; i--) { //largeur de l'ArrayList messagesPart2 correspond à (messagesPart2.size()). (taille-1) pour qu'on commence par la fin et on décrémente (i--) pour afficher le dernier message entré dans l'ArrayList 
-    String currentMessage = messagesPart2.get(i);
-
+    text(currentName, a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
+    //Ici nous avons affiché le prénom, il faut maintenant afficher la deuxième partie du message
+    
+    a=x;//On remet a au bord de la fenêtre pour écrire le message
+    b +=(MAXFONT); //On descend b pour écrire le message en dessous du prénom
+    String currentMessage = messagesPart2.get(i);//On récupère le message associé au prénom
     textAlign(LEFT);
     textSize(15);
     textFont(mixMonoReg);
     fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
     //text(messagesPart2.get(i), c, d); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
 
+    //On affiche ici le message caractère par caractère
+    int largeurLigneCourante = x;
+    
     for (int j = 0; j < currentMessage.length(); j++) {
-      textSize(random(15, 22));
-      text(currentMessage.charAt(j), c, d); // text("Ceci est mon texte", x, y);
+      textSize(random(MINFONT, MAXFONT));
+      //Gestion des messages sur plusieurs lignes
+      largeurLigneCourante += textWidth(currentMessage.charAt(j));
+     if(largeurLigneCourante > FRAMEWIDTH - 2*x){
+        largeurLigneCourante = x;
+        a=x;
+        b+=MAXFONT;//On descend b si une deuxième ligne est nécessaire
+      }
+      
+      text(currentMessage.charAt(j), a, b); // text("Ceci est mon texte", x, y);
       // textWidth() spaces the characters out properly.
-      c += textWidth(currentMessage.charAt(j));
+      a += textWidth(currentMessage.charAt(j));
     }
-    c=x+10;
-    d -=70; //on change la position en b à chaque fois pour éviter que les messages s'affichent les uns sur les autres
+    //Ici nous avons écrit la deuxième partie du message
+    
+    //Nous devons maintenant remonter le curseur et le réaligner afin d'écire le message précédent
+    a=x;
+    b -=(6*MAXFONT); //on change la position en d à chaque fois pour éviter que les messages s'affichent les uns sur les autres
   }
 
 

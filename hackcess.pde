@@ -3,12 +3,12 @@ PFont mixMonoReg;
 PFont mixMonoXBold;
 
 // TAILLE FENETRE
-final int FRAMEWIDTH = 500;
+final int FRAMEWIDTH = 700;
 final int FRAMEHEIGHT = 500;
 
 /*On donne les bornes de l'interval dans lequel peut se situer la taille 
-de la police de la seconde partie du message*/
-final int MINFONT=30;
+ de la police de la seconde partie du message*/
+final int MINFONT=35;
 final int MAXFONT=40;
 
 // VARIABLES FLUX DE TEXTE
@@ -25,17 +25,27 @@ color c1 = color (70, 100, 217); // couleur background
 color c2 = color(231, 205, 112); // couleur flux de texte
 color c3 = color(255); // couleur [HACK/CESS] + cercle
 
+int c2R=231;
+int c2G=205;
+int c2B=112;
+
+//Jouer avec l'opacité de départ et le facteur de réduction afin d'obtenir l'effet désiré
+int c2Alpha=255;
+int facteurReductionOpacite=30;
+
+
 ArrayList<String> messagesPart1 = new ArrayList(); // correspond aux prénoms
 ArrayList<String> messagesPart2 = new ArrayList(); // correspond aux phrases écrites
 
 
-void settings(){
+void settings() {
   //On place la fonction size dans settings au lieu de setup afin de pouvoir utiliser des variables comme paramètres
   size(FRAMEWIDTH, FRAMEHEIGHT); // taille fenêtre
 }
 
 void setup() {
-  
+  String test = "@project_hackcess";
+  println(test.length());
   background(c1); //car sinon chargement d'un fond gris pas beau
 
   mixMonoReg = createFont("TheMixMono-Bold.otf", 20); //on vient charger la typo en corps 20
@@ -47,8 +57,8 @@ void setup() {
   refreshScreen(); // on appelle la fonction refreshScreen()
 }
 
-void scanIP(){
- //println("coucou"); // ce que m'aura filé Quentin 
+void scanIP() {
+  //println("coucou"); // ce que m'aura filé Quentin
 }
 
 void draw() {
@@ -133,47 +143,84 @@ void refreshScreen() { // fonction refreshScreen()
   int a = x; // on définit la position du message à la base en x
   int b = y; // on définit la position du message à la base en y
   /*int c = x+PADDING;
-  int d = b+26;*/
-  
-  for(int i = messagesPart1.size()-1; i>=0; i--){//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
+   int d = b+26;*/
+
+  for (int i = messagesPart1.size()-1; i>=0; i--) {//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
     String currentName = messagesPart1.get(i);
     textFont(mixMonoXBold);
     textAlign(LEFT);
+    color c2 = color(c2R, c2G, c2B, c2Alpha+facteurReductionOpacite*(i-messagesPart1.size()-1)); 
     fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
     text(currentName, a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
     //Ici nous avons affiché le prénom, il faut maintenant afficher la deuxième partie du message
-    
+
     a=x;//On remet a au bord de la fenêtre pour écrire le message
-    b +=(MAXFONT); //On descend b pour écrire le message en dessous du prénom
+    b +=MAXFONT; //On descend b pour écrire le message en dessous du prénom
     String currentMessage = messagesPart2.get(i);//On récupère le message associé au prénom
     textAlign(LEFT);
     textSize(15);
     textFont(mixMonoReg);
-    fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
+    //fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
     //text(messagesPart2.get(i), c, d); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
 
     //On affiche ici le message caractère par caractère
     int largeurLigneCourante = x;
+    //On découpe le message courant mot à mot
+    String[] mots = split(currentMessage, ' ');
     
-    for (int j = 0; j < currentMessage.length(); j++) {
-      textSize(random(MINFONT, MAXFONT));
-      //Gestion des messages sur plusieurs lignes
-      largeurLigneCourante += textWidth(currentMessage.charAt(j));
-     if(largeurLigneCourante > FRAMEWIDTH - 2*x){
+    int nbLine=2;//Compte le nombre de ligne que comporte le message courrant
+    
+    //La gestion du retour à la ligne se fait mot à mot
+    for (int indexMots=0; indexMots<mots.length; indexMots++) {
+      String currentWord = mots[indexMots];
+      //Si le mot ne peut tenir sur la ligne on en change
+      if (largeurLigneCourante + currentWord.length()*MAXFONT > FRAMEWIDTH - x) {
         largeurLigneCourante = x;
         a=x;
         b+=MAXFONT;//On descend b si une deuxième ligne est nécessaire
+        nbLine++;
       }
-      
-      text(currentMessage.charAt(j), a, b); // text("Ceci est mon texte", x, y);
-      // textWidth() spaces the characters out properly.
-      a += textWidth(currentMessage.charAt(j));
+
+      for (int j = 0; j < currentWord.length(); j++) {
+        textSize(random(MINFONT, MAXFONT));  
+        largeurLigneCourante += textWidth(currentWord.charAt(j));    
+        text(currentWord.charAt(j), a, b); // text("Ceci est mon texte", x, y);
+        // textWidth() spaces the characters out properly.
+        a += textWidth(currentWord.charAt(j));
+      }
+      //On a perdu les espaces lors du split, il faut donc les gérer à la main
+      if (indexMots!=0 && indexMots !=mots.length-2) {
+        text(' ', a, b);
+        a+= textWidth(' ');
+        largeurLigneCourante+= textWidth(' ');
+      }
     }
     //Ici nous avons écrit la deuxième partie du message
-    
+
     //Nous devons maintenant remonter le curseur et le réaligner afin d'écire le message précédent
     a=x;
-    b -=(6*MAXFONT); //on change la position en d à chaque fois pour éviter que les messages s'affichent les uns sur les autres
+    //Gerer espacement inter message
+    /* si il n'y à qu'un seul message on ne fait rien*/
+    if(messagesPart1.size()==1){
+    }
+    //Si i est le dernier élement de la liste on ne fait rien
+    else if(i==0){ 
+    }
+    
+    else{
+      int nbLineSpace=0;
+      if(((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH > 1){
+        nbLineSpace=2;
+      }
+      else{
+        nbLineSpace=1;
+      }
+      b-=(nbLine+nbLineSpace+1)*MAXFONT;
+      if(i==messagesPart2.size()-1 && messagesPart2.size()>2){
+        println("divison :"+((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH);
+        println("espacement :"+ (nbLine+nbLineSpace+1));
+      }
+    } 
   }
 
 

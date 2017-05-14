@@ -52,6 +52,8 @@ void setup() {
   mixMonoXBold = createFont("TheMixMono-XBold.otf", 23);  // idem corps 23
 
   noCursor(); // pas de curseur apparant dans la fenêtre
+  
+  thread("scanIP"); // mettre nom de la fonction pour avoir un thread
 
   loadMessage(); //on appelle la fonction message()
   refreshScreen(); // on appelle la fonction refreshScreen()
@@ -62,8 +64,7 @@ void scanIP() {
 }
 
 void draw() {
-  thread("scanIP"); // mettre nom de la fonction pour avoir un thread
-
+  
   //barre du haut
   noStroke();
   fill(c1);
@@ -87,6 +88,9 @@ void draw() {
   float d3 = 65 + (sin(angle + HALF_PI) * 45);
   ellipse(width/2, 42, d3/5, d3/5);
   angle += speed;
+  
+  refreshScreen(); // on relance la fonction à chaque fois qu'on appuie sur la souris
+
 }
 
 
@@ -131,7 +135,7 @@ void loadMessage() { //fonction message()
   
   hostnameToSentences.put(FacebookHostname, Facebook);
 
-  String detectedHostname = "Facebook";
+  String detectedHostname = "Twitter";
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
   int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
@@ -164,7 +168,7 @@ void refreshScreen() { // fonction refreshScreen()
   /*int c = x+PADDING;
    int d = b+26;*/
 
-  for (int i = messagesPart1.size()-1; i>=0; i--) {//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
+  for (int i = messagesPart1.size()-1; i>=0 && b>=0; i--) {//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
     String currentName = messagesPart1.get(i);
     textFont(mixMonoXBold);
     textAlign(LEFT);
@@ -175,6 +179,7 @@ void refreshScreen() { // fonction refreshScreen()
 
     a=x;//On remet a au bord de la fenêtre pour écrire le message
     b +=MAXFONT; //On descend b pour écrire le message en dessous du prénom
+    
     String currentMessage = messagesPart2.get(i);//On récupère le message associé au prénom
     textAlign(LEFT);
     textSize(15);
@@ -201,7 +206,7 @@ void refreshScreen() { // fonction refreshScreen()
       }
 
       for (int j = 0; j < currentWord.length(); j++) {
-        textSize(random(MINFONT, MAXFONT));  
+        textSize(abs(cos(j)) * (MAXFONT - MINFONT) + MINFONT);  
         largeurLigneCourante += textWidth(currentWord.charAt(j));    
         text(currentWord.charAt(j), a, b); // text("Ceci est mon texte", x, y);
         // textWidth() spaces the characters out properly.
@@ -248,5 +253,4 @@ void refreshScreen() { // fonction refreshScreen()
 
 void mousePressed() {
   loadMessage(); // on relance la fonction à chaque fois qu'on appuie sur la souris
-  refreshScreen(); // on relance la fonction à chaque fois qu'on appuie sur la souris
 }

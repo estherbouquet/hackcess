@@ -12,8 +12,8 @@ final int MINFONT=35;
 final int MAXFONT=40;
 
 // VARIABLES FLUX DE TEXTE
-int x = 10;
-int y = FRAMEHEIGHT-70-3*MAXFONT;
+int messageStartX = 10;
+int messageStartY = FRAMEHEIGHT-70-2*MAXFONT;
 int e = 5;
 
 // VARIABLES POUR LE CERCLE
@@ -54,9 +54,6 @@ void setup() {
   noCursor(); // pas de curseur apparant dans la fenêtre
   
   thread("scanIP"); // mettre nom de la fonction pour avoir un thread
-
-  loadMessage(); //on appelle la fonction message()
-  refreshScreen(); // on appelle la fonction refreshScreen()
 }
 
 void scanIP() {
@@ -64,186 +61,39 @@ void scanIP() {
 }
 
 void draw() {
-  
-  //barre du haut
-  noStroke();
-  fill(c1);
-  rect(0, 0, width, 30);
-
-  textFont(mixMonoReg); //on attribue cette typo au texte
-  fill(c3);
-  textSize(15);
-  textAlign(CENTER);
-  text("[HACK/CESS]", width/2, 22);
-
-
-  // CERCLE QUI SIMULE CHARGEMENT
-  stroke(190, 20); // ! ne marche pas si pas de contour -> pourquoi ? Je ne sais pas
-  //noStroke();
-  fill(c3, 20); // blanc + opacité de 100 
-  float d1 = 65 + (sin(angle) * 45);
-  ellipse(width/2, 42, d1/5, d1/5);
-  float d2 = 65 + (sin(angle + QUARTER_PI) * 45);
-  ellipse(width/2, 42, d2/5, d2/5);
-  float d3 = 65 + (sin(angle + HALF_PI) * 45);
-  ellipse(width/2, 42, d3/5, d3/5);
-  angle += speed;
-  
-  refreshScreen(); // on relance la fonction à chaque fois qu'on appuie sur la souris
-
+  topBar();
+  loadingCircle();
+  displayMessages(); 
 }
 
-
-void loadMessage() { //fonction message()
-  String[] Subjects={
-    "Marie", "Lou", "Nina", "Marion", "Lisa", 
-    "Anna", "Flo", "Alice", "Emma", "Louise", 
-    "Lola", "Lucie", "Eva", "Rose", "Elsa", 
-    "Sarah", "Alicia", "Lily", "Luna", "Alix", 
-    "Lucas", "Hugo", "Tom", "Sacha", "Eliot", 
-    "Jules", "Paul", "Alex", "Axel", "Ezra", 
-    "Dorian", "Diego", "Charles", "Max", "Marc", 
-    "Will", "Isaac", "Victor", "Sam", "Mathis"
-
-  }; // on crée un tableau de String qui regroupe tous les prénoms
-
-  String[] Salutations={
-    "Hello world", "Hello", "Coucou", "Salut", "Hi", 
-    "Salut, ça va ?", "Bonjour", "Eh oh, je suis là !"
-  }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
-
-  String[] Twitter={
-    "#BackOnTwitter", "Bien le bonjour chers twittos", "@Twitter, c'est mieux qu'avant", 
-    "#TeamTwitter", "#FollowBack ?", "Quels sont les derniers #TT ?", "Salut Twitter !", 
-    "Mon avis tient en 140 signes.", "Quoi de neuf dans ma #TL ?", "Going on @Twitter via @hackcess", 
-    "On peut se parler par #DM", "Oh, un nouveau #RT", "#FF @project_hackcess", "J'actualise en ce moment ma #TL"
-  }; //on crée un tableau de String qui regroupe toutes les phrases pour connexion à Twitter
-
-  String[] Facebook={
-    "#BackOnFacebook", "Bien le bonjour chers fb", "Facebook, c'est mieux qu'avant", 
-    "#TeamFacebook", "#Nouvel ami", "Quels sont mes dernières notificaions ?", "Salut Fb !", 
-  }; //on crée un tableau de String qui regroupe toutes les phrases pour connexion à Twitter
-
-
-  String TwitterHostname = "Twitter";
-  String FacebookHostname = "Facebook";
-
-  HashMap<String, String[]> hostnameToSentences = new HashMap<String, String[]>(); // on crée un nouvel objet HashMap<String, String[]>() que l'on va stocker dans hostnameToSentences
-  hostnameToSentences.put(TwitterHostname, Twitter); // les deux Twitter sont des variables
-  //hostnameToSentences.put("Twitter", new String[]{"back on twitter", "bien le bnjour cher twittos"});
-  // les deux lignes du dessus sont équivalentes
-  
-  hostnameToSentences.put(FacebookHostname, Facebook);
-
-  String detectedHostname = "Twitter";
-
-  int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
-  int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
-  int selectedSentence = int(random(hostnameToSentences.get(detectedHostname).length));  
-  //cf feuille ligne décomposée
-
-  String messageSubject = Subjects[subject]; // on crée un messageSubject avec subject
-  println(subject+ " " +messageSubject); //on imprime le message dans la console de debug au cas-où
-  String messageSentence = "« "+hostnameToSentences.get(detectedHostname)[selectedSentence]+" »"; // on crée un messageSentence avec la phrase sélectionnée du tableau correspond au hostname détecté
-  println(messageSentence);
-
-  messagesPart1.add(messageSubject); //on divise le message en 2. Part1=le prénom
-  if (messagesPart1.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
-    messagesPart1.remove(messagesPart1.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
-  }
-
-  messagesPart2.add(messageSentence); //Part2=la phrase prononcée
-  if (messagesPart2.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
-    messagesPart2.remove(messagesPart2.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
-  }
-}
-
-void refreshScreen() { // fonction refreshScreen()
+void displayMessages() { // fonction refreshScreen()
   fill(c1);
   noStroke();
   rect(0, 30, width, height-30);//Refresh l'écran sans masquer le rond du haut
 
-  int a = x; // on définit la position du message à la base en x
-  int b = y; // on définit la position du message à la base en y
-  /*int c = x+PADDING;
-   int d = b+26;*/
+  int blocMessagePosition = messageStartY; // on définit la position du message à la base en y
 
-  for (int i = messagesPart1.size()-1; i>=0 && b>=0; i--) {//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
-    String currentName = messagesPart1.get(i);
-    textFont(mixMonoXBold);
-    textAlign(LEFT);
+  for (int i = messagesPart1.size()-1; i>=0 && blocMessagePosition>=0; i--) {//Un seul index (i) car Part1 et Part2 ont la même taille (logiquement)
+    int messageShiftY = 0;
+    
+    // Définition de la couleur + opacité
     color c2 = color(c2R, c2G, c2B, c2Alpha+facteurReductionOpacite*(i-messagesPart1.size()-1)); 
     fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
-    text(currentName, a, b); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
-    //Ici nous avons affiché le prénom, il faut maintenant afficher la deuxième partie du message
-
-    a=x;//On remet a au bord de la fenêtre pour écrire le message
-    b +=MAXFONT; //On descend b pour écrire le message en dessous du prénom
+    
+    String currentName = messagesPart1.get(i);
+    messageShiftY += displayName(currentName, blocMessagePosition);
     
     String currentMessage = messagesPart2.get(i);//On récupère le message associé au prénom
-    textAlign(LEFT);
-    textSize(15);
-    textFont(mixMonoReg);
-    //fill(c2); // on met la couleur du texte car sinon, même couleur que le cercle (conflit)
-    //text(messagesPart2.get(i), c, d); //text a la valeur "messages.get(i)" et donc s'adapte au niveau du message à afficher en x et en y
-
-    //On affiche ici le message caractère par caractère
-    int largeurLigneCourante = x;
-    //On découpe le message courant mot à mot
-    String[] mots = split(currentMessage, ' ');
-
-    int nbLine=2;//Compte le nombre de ligne que comporte le message courrant
-
-    //La gestion du retour à la ligne se fait mot à mot
-    for (int indexMots=0; indexMots<mots.length; indexMots++) {
-      String currentWord = mots[indexMots];
-      //Si le mot ne peut tenir sur la ligne on en change
-      if (largeurLigneCourante + currentWord.length()*MAXFONT > FRAMEWIDTH - x) {
-        largeurLigneCourante = x;
-        a=x;
-        b+=MAXFONT;//On descend b si une deuxième ligne est nécessaire
-        nbLine++;
-      }
-
-      for (int j = 0; j < currentWord.length(); j++) {
-        textSize(abs(cos(j)) * (MAXFONT - MINFONT) + MINFONT);  
-        largeurLigneCourante += textWidth(currentWord.charAt(j));    
-        text(currentWord.charAt(j), a, b); // text("Ceci est mon texte", x, y);
-        // textWidth() spaces the characters out properly.
-        a += textWidth(currentWord.charAt(j));
-      }
-      //On a perdu les espaces lors du split, il faut donc les gérer à la main
-      if (indexMots!=0 && indexMots !=mots.length-2) {
-        text(' ', a, b);
-        a+= textWidth(' ');
-        largeurLigneCourante+= textWidth(' ');
-      }
-    }
+    ArrayList<String> splitMessage = splitMessage(currentMessage);
+    messageShiftY += displayMessage(splitMessage, blocMessagePosition + messageShiftY);
+    
     //Ici nous avons écrit la deuxième partie du message
-
-    //Nous devons maintenant remonter le curseur et le réaligner afin d'écire le message précédent
-    a=x;
-    //Gerer espacement inter message
-    /* si il n'y à qu'un seul message on ne fait rien*/
-    if (messagesPart1.size()==1) {
-    }
-    //Si i est le dernier élement de la liste on ne fait rien
-    else if (i==0) {
-    } else {
-      int nbLineSpace=0;
-      if (((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH > 1) {
-        nbLineSpace=2;
-      } else {
-        nbLineSpace=1;
-      }
-      b-=(nbLine+nbLineSpace+1)*MAXFONT;
-      if (i==messagesPart2.size()-1 && messagesPart2.size()>2) {
-        println("divison :"+((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH);
-        println("espacement :"+ (nbLine+nbLineSpace+1));
-      }
-    }
+    
+    if (i == 0) continue;
+    //Repositionne le curseur blocMessagePosition
+    //         taille prochain nom + taille prochain message (nombre de lignes * MAXFONT) + une demi ligne vide
+    blocMessagePosition -= MAXFONT + MAXFONT * splitMessage(messagesPart2.get(i-1)).size() + MAXFONT * 0.5;
   }
-
 
   //barre du bas
   noStroke();
@@ -252,5 +102,5 @@ void refreshScreen() { // fonction refreshScreen()
 }
 
 void mousePressed() {
-  loadMessage(); // on relance la fonction à chaque fois qu'on appuie sur la souris
+  addMessage("Twitter"); // on relance la fonction à chaque fois qu'on appuie sur la souris
 }

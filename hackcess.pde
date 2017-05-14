@@ -4,7 +4,7 @@ PFont mixMonoXBold;
 
 // TAILLE FENETRE
 final int FRAMEWIDTH = 700;
-final int FRAMEHEIGHT = 500;
+final int FRAMEHEIGHT = 900;
 
 /*On donne les bornes de l'interval dans lequel peut se situer la taille 
  de la police de la seconde partie du message*/
@@ -113,24 +113,43 @@ void loadMessage() { //fonction message()
     "#TeamTwitter", "#FollowBack ?", "Quels sont les derniers #TT ?", "Salut Twitter !", 
     "Mon avis tient en 140 signes.", "Quoi de neuf dans ma #TL ?", "Going on @Twitter via @hackcess", 
     "On peut se parler par #DM", "Oh, un nouveau #RT", "#FF @project_hackcess", "J'actualise en ce moment ma #TL"
-  }; //on crée un tableau de String qui regroupe toutes les phrases pour la 1re connexion
+  }; //on crée un tableau de String qui regroupe toutes les phrases pour connexion à Twitter
+
+  String[] Facebook={
+    "#BackOnFacebook", "Bien le bonjour chers fb", "Facebook, c'est mieux qu'avant", 
+    "#TeamFacebook", "#Nouvel ami", "Quels sont mes dernières notificaions ?", "Salut Fb !", 
+  }; //on crée un tableau de String qui regroupe toutes les phrases pour connexion à Twitter
+
+
+  String TwitterHostname = "Twitter";
+  String FacebookHostname = "Facebook";
+
+  HashMap<String, String[]> hostnameToSentences = new HashMap<String, String[]>(); // on crée un nouvel objet HashMap<String, String[]>() que l'on va stocker dans hostnameToSentences
+  hostnameToSentences.put(TwitterHostname, Twitter); // les deux Twitter sont des variables
+  //hostnameToSentences.put("Twitter", new String[]{"back on twitter", "bien le bnjour cher twittos"});
+  // les deux lignes du dessus sont équivalentes
+  
+  hostnameToSentences.put(FacebookHostname, Facebook);
+
+  String detectedHostname = "Facebook";
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
   int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
-  int twitter = int(random(Twitter.length));
+  int selectedSentence = int(random(hostnameToSentences.get(detectedHostname).length));  
+  //cf feuille ligne décomposée
 
   String messageSubject = Subjects[subject]; // on crée un messageSubject avec subject
   println(subject+ " " +messageSubject); //on imprime le message dans la console de debug au cas-où
-  String messageSentence = "« "+Twitter[twitter]+" »"; // on crée un messageSentence avec twitter
+  String messageSentence = "« "+hostnameToSentences.get(detectedHostname)[selectedSentence]+" »"; // on crée un messageSentence avec la phrase sélectionnée du tableau correspond au hostname détecté
   println(messageSentence);
 
   messagesPart1.add(messageSubject); //on divise le message en 2. Part1=le prénom
-  if (messagesPart1.size()>15) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
+  if (messagesPart1.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messagesPart1.remove(messagesPart1.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
   }
 
   messagesPart2.add(messageSentence); //Part2=la phrase prononcée
-  if (messagesPart2.size()>15) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
+  if (messagesPart2.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messagesPart2.remove(messagesPart2.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
   }
 }
@@ -167,9 +186,9 @@ void refreshScreen() { // fonction refreshScreen()
     int largeurLigneCourante = x;
     //On découpe le message courant mot à mot
     String[] mots = split(currentMessage, ' ');
-    
+
     int nbLine=2;//Compte le nombre de ligne que comporte le message courrant
-    
+
     //La gestion du retour à la ligne se fait mot à mot
     for (int indexMots=0; indexMots<mots.length; indexMots++) {
       String currentWord = mots[indexMots];
@@ -201,26 +220,23 @@ void refreshScreen() { // fonction refreshScreen()
     a=x;
     //Gerer espacement inter message
     /* si il n'y à qu'un seul message on ne fait rien*/
-    if(messagesPart1.size()==1){
+    if (messagesPart1.size()==1) {
     }
     //Si i est le dernier élement de la liste on ne fait rien
-    else if(i==0){ 
-    }
-    
-    else{
+    else if (i==0) {
+    } else {
       int nbLineSpace=0;
-      if(((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH > 1){
+      if (((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH > 1) {
         nbLineSpace=2;
-      }
-      else{
+      } else {
         nbLineSpace=1;
       }
       b-=(nbLine+nbLineSpace+1)*MAXFONT;
-      if(i==messagesPart2.size()-1 && messagesPart2.size()>2){
+      if (i==messagesPart2.size()-1 && messagesPart2.size()>2) {
         println("divison :"+((messagesPart2.get(i-1).length()+2)*MAXFONT)/FRAMEWIDTH);
         println("espacement :"+ (nbLine+nbLineSpace+1));
       }
-    } 
+    }
   }
 
 

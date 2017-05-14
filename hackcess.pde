@@ -1,3 +1,5 @@
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 // TYPOGRAPHIES
 PFont mixMonoReg;
 PFont mixMonoXBold;
@@ -33,10 +35,10 @@ int c2B=112;
 int c2Alpha=255;
 int facteurReductionOpacite=30;
 
-
 ArrayList<String> messagesPart1 = new ArrayList(); // correspond aux prénoms
 ArrayList<String> messagesPart2 = new ArrayList(); // correspond aux phrases écrites
 
+ConcurrentLinkedQueue<DetectedTraffic> Packets;
 
 void settings() {
   //On place la fonction size dans settings au lieu de setup afin de pouvoir utiliser des variables comme paramètres
@@ -44,6 +46,11 @@ void settings() {
 }
 
 void setup() {
+  Packets = new ConcurrentLinkedQueue<DetectedTraffic>();
+  hostnameToSentences.put("twitter", Twitter);
+  hostnameToSentences.put("facebook", Facebook);
+  hostnameToSentences.put("google", Twitter);
+  
   String test = "@project_hackcess";
   println(test.length());
   background(c1); //car sinon chargement d'un fond gris pas beau
@@ -53,14 +60,16 @@ void setup() {
 
   noCursor(); // pas de curseur apparant dans la fenêtre
   
-  thread("scanIP"); // mettre nom de la fonction pour avoir un thread
-}
-
-void scanIP() {
-  //println("coucou"); // ce que m'aura filé Quentin
+  thread("capture"); // mettre nom de la fonction pour avoir un thread
+  thread("resolver");
 }
 
 void draw() {
+  DetectedTraffic dt = Packets.poll();
+  if (dt != null) {
+    addMessage(dt.identifiedAs);
+  }
+  
   topBar();
   loadingCircle();
   displayMessages(); 
@@ -99,8 +108,4 @@ void displayMessages() { // fonction refreshScreen()
   noStroke();
   fill(c2);
   rect(0, height-20, width, 20);
-}
-
-void mousePressed() {
-  addMessage("Twitter"); // on relance la fonction à chaque fois qu'on appuie sur la souris
 }

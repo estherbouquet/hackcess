@@ -3,18 +3,10 @@ void setTextSizeFromCursor(int cursor) {
 }
 
 void addMessage(String detectedHostname) { //fonction message()
-  String TwitterHostname = "Twitter";
-  String FacebookHostname = "Facebook";
-
-  HashMap<String, String[]> hostnameToSentences = new HashMap<String, String[]>(); // on crée un nouvel objet HashMap<String, String[]>() que l'on va stocker dans hostnameToSentences
-  hostnameToSentences.put(TwitterHostname, Twitter); // les deux Twitter sont des variables
-  //hostnameToSentences.put("Twitter", new String[]{"back on twitter", "bien le bnjour cher twittos"});
-  // les deux lignes du dessus sont équivalentes
-  
-  hostnameToSentences.put(FacebookHostname, Facebook);
 
   int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
-  int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
+  //int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
+  println(detectedHostname);
   int selectedSentence = int(random(hostnameToSentences.get(detectedHostname).length));  
   //cf feuille ligne décomposée
 

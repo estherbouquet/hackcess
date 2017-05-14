@@ -93,7 +93,7 @@ void capture() {
         dt.identifiedAs = "google";
       }
 
-      if (dt.identifiedAs != null) {
+      if (dt.identifiedAs != null && dt.identifiedAs != "") {
         Packets.add(dt);
       }
     }

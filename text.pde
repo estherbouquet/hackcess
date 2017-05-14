@@ -1,4 +1,6 @@
-String[] Subjects={
+import java.util.*;
+
+List<String> Subjects = new ArrayList(Arrays.asList(new String[]{
   "Marie", "Lou", "Nina", "Marion", "Lisa", 
   "Anna", "Flo", "Alice", "Emma", "Louise", 
   "Lola", "Lucie", "Eva", "Rose", "Elsa", 
@@ -7,8 +9,7 @@ String[] Subjects={
   "Jules", "Paul", "Alex", "Axel", "Ezra", 
   "Dorian", "Diego", "Charles", "Max", "Marc", 
   "Will", "Isaac", "Victor", "Sam", "Mathis"
-
-}; // on crée un tableau de String qui regroupe tous les prénoms
+})); // on crée un tableau de String qui regroupe tous les prénoms
 
 String[] Salutations={
   "Hello world", "Hello", "Coucou", "Salut", "Hi", 
@@ -28,3 +29,4 @@ String[] Facebook={
 }; //on crée un tableau de String qui regroupe toutes les phrases pour connexion à Twitter
 
 HashMap<String, String[]> hostnameToSentences = new HashMap<String, String[]>(); // on crée un nouvel objet HashMap<String, String[]>() que l'on va stocker dans hostnameToSentences
+HashMap<String, String> ipToSubject = new HashMap<String, String>(); // on crée un nouvel objet HashMap<String, String[]>() que l'on va stocker dans hostnameToSentences

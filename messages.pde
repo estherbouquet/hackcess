@@ -2,19 +2,26 @@ void setTextSizeFromCursor(int cursor) {
   textSize(abs(cos(cursor)) * (MAXFONT - MINFONT) + MINFONT);  // cf calcul feuille
 }
 
-void addMessage(String detectedHostname) { //fonction message()
+void addMessage(DetectedTraffic dt) { //fonction message()
 
-  int subject = int(random(Subjects.length)); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
+  String messageSubject = ipToSubject.get(dt.src);
+  if (messageSubject == null) {
+    if (Subjects.size() <= 0) {
+      messageSubject = "Jonathan";
+    } else {
+      int selection = int(random(Subjects.size())); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
+      messageSubject = Subjects.get(selection); // on crée un messageSubject avec subject
+      Subjects.remove(messageSubject);
+      ipToSubject.put(dt.src, messageSubject);
+    }
+  }
+
   //int salutation = int(random(Salutations.length)); //idem mais avec les bonjour/hello  
-  println(detectedHostname);
-  int selectedSentence = int(random(hostnameToSentences.get(detectedHostname).length));  
+  int selectedSentence = int(random(hostnameToSentences.get(dt.identifiedAs).length));  
   //cf feuille ligne décomposée
 
-  String messageSubject = Subjects[subject]; // on crée un messageSubject avec subject
-  println(subject+ " " +messageSubject); //on imprime le message dans la console de debug au cas-où
-  String messageSentence = "« "+hostnameToSentences.get(detectedHostname)[selectedSentence]+" »"; // on crée un messageSentence avec la phrase sélectionnée du tableau correspond au hostname détecté
-  println(messageSentence);
-
+  String messageSentence = "« "+hostnameToSentences.get(dt.identifiedAs)[selectedSentence]+" »"; // on crée un messageSentence avec la phrase sélectionnée du tableau correspond au hostname détecté
+  
   messagesPart1.add(messageSubject); //on divise le message en 2. Part1=le prénom
   if (messagesPart1.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messagesPart1.remove(messagesPart1.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut

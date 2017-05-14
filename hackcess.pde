@@ -67,7 +67,7 @@ void setup() {
 void draw() {
   DetectedTraffic dt = Packets.poll();
   if (dt != null) {
-    addMessage(dt.identifiedAs);
+    addMessage(dt);
   }
   
   topBar();

@@ -16,6 +16,11 @@ HashMap<String, String> IPtoCanonical = new HashMap<String, String>();
 ConcurrentLinkedQueue<InetAddress> toResolve = new ConcurrentLinkedQueue<InetAddress>();
 
 void resolver() {
+
+  ArrayList <String> stockageIP = new ArrayList<String>();
+  stockageIP.add("192.168.137.1");//On evite de donner un nom au routeur
+  stockageIP.add("192.168.137.255"); // adresse réservée au broadcast
+  String ipDuReseau ="192.168.137";   
   while (true) {
     InetAddress ip = toResolve.poll();
     if (ip == null) {
@@ -23,10 +28,16 @@ void resolver() {
       continue;
     }
     if (IPtoCanonical.get(ip.getHostAddress()) != null) continue;
-    
+
     String hostip = ip.getHostAddress();
     String hostname = ip.getCanonicalHostName();
     println("resolve " + hostip + " -> " + hostname);
+    if (hostip.contains(ipDuReseau)&& !stockageIP.contains(hostip)) {
+      stockageIP.add(hostip);
+      println("NEW IP DeTECED : "+hostip);
+      //hostnameToSentences.put(dt.src, Salutations);
+    }
+
     IPtoCanonical.put(hostip, hostname);
   }
 }
@@ -34,7 +45,7 @@ void resolver() {
 String getCanonical(InetAddress ip) {
   String canonical = IPtoCanonical.get(ip.getHostAddress());
   if (canonical != null) return canonical;
-  
+
   toResolve.add(ip);
   return "";
 }
@@ -66,35 +77,44 @@ void capture() {
     // On récupère la liste des interfaces
     List<PcapNetworkInterface> listeInterfacesReseaux = Pcaps.findAllDevs();
     for (PcapNetworkInterface i : listeInterfacesReseaux) {
+      println("interface n]"+i);
       println(i.getName());
       println(i.getDescription());
       println("");
     }
 
     // On récupère l'interface qui nous intéresse
-    PcapNetworkInterface monInterface = listeInterfacesReseaux.get(0);
+    PcapNetworkInterface monInterface = listeInterfacesReseaux.get(4);
+
     //PcapNetworkInterface monInterface = Pcaps.getDevByName("enp3s0f1");
 
     // On lance la capture dessus
     PcapHandle capture = monInterface.openLive(100, PromiscuousMode.PROMISCUOUS, 10000000);
+    int vitesseDefilement =10;
+    int compteur =0;
 
     while (true) {
       //print(".");
       // On récupère un packet
       Packet packet = capture.getNextPacketEx();
       DetectedTraffic dt = getBaseDetection(packet);
-      
+      //println(stockageIP.size());
       if (dt == null) continue;
       //println(dt.src);
-      
+
+
+
       if (dt.dest.contains("facebook") || dt.dest.contains("fbcdn")) {
         dt.identifiedAs = "facebook";
+        compteur++;
       } else if (dt.dest.contains("1e100")) {
         dt.identifiedAs = "google";
+        compteur++;
       }
 
-      if (dt.identifiedAs != null && dt.identifiedAs != "") {
+      if (dt.identifiedAs != null && dt.identifiedAs != "" && compteur%vitesseDefilement==0) {
         Packets.add(dt);
+        compteur=0;
       }
     }
   } 

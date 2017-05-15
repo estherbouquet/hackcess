@@ -8,7 +8,7 @@ PFont mixMonoXBold;
 final int FRAMEWIDTH = 700;
 final int FRAMEHEIGHT = 900;
 
-/*On donne les bornes de l'interval dans lequel peut se situer la taille 
+/*On donne les bornes de l'intervalle dans lequel peut se situer la taille 
  de la police de la seconde partie du message*/
 final int MINFONT=30;
 final int MAXFONT=40;

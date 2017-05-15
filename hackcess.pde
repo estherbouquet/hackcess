@@ -10,7 +10,7 @@ final int FRAMEHEIGHT = 900;
 
 /*On donne les bornes de l'interval dans lequel peut se situer la taille 
  de la police de la seconde partie du message*/
-final int MINFONT=35;
+final int MINFONT=30;
 final int MAXFONT=40;
 
 // VARIABLES FLUX DE TEXTE

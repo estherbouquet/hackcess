@@ -55,7 +55,7 @@ String[] Informations={
 };
 
 String[] Google={
-  "ras 1", "ras 2", "ras 3", "ras 4", "ras 5", "ras 6",
+  "Lancement d'une nouvelle recherche !", "ras 2", "ras 3", "ras 4", "ras 5", "ras 6",
   "ras 7", "ras 8", "ras 9", "ras 10", "ras 11", "ras 12",
    "ras 13", "ras 14", "ras 15", "ras 16", "ras 17", "ras 18",
 };

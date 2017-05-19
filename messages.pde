@@ -1,5 +1,24 @@
+import net.jodah.expiringmap.ExpiringMap;
+
 void setTextSizeFromCursor(int cursor) {
   textSize(abs(cos(cursor)) * (MAXFONT - MINFONT) + MINFONT);  // cf calcul feuille
+}
+
+void fetchMessages(ConcurrentLinkedQueue<DetectedTraffic> packets, Map<String, Boolean> recentConnections) {
+  DetectedTraffic dt = null;
+  
+  // Tant qu'il y a des paquets dans la file d'attente
+  while ((dt = packets.poll()) != null) {
+    String packetKey = dt.src + "@" + dt.identifiedAs;
+    if (recentConnections.containsKey(packetKey)) {
+      // On a déjà ajouté un message pour ce couple (personne, service) récemment
+      // On passe au paquet suivant sans rien faire
+      continue;
+    }
+    
+    recentConnections.put(packetKey, true);
+    addMessage(dt);
+  }
 }
 
 void addMessage(DetectedTraffic dt) { //fonction message()
@@ -31,6 +50,8 @@ void addMessage(DetectedTraffic dt) { //fonction message()
   if (messagesPart2.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments
     messagesPart2.remove(messagesPart2.get(0)); // on ne peut pas lui dire d'enlever le dernier, mais seulement un élement. donc on "contourne" le problème en mettant 0 car 0=1er élément du tableau en partant du haut
   }
+  
+  println("message "+messageSubject+ " : "+messageSentence);
 }
 
 /* 

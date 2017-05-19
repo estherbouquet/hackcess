@@ -99,8 +99,6 @@ void capture() {
 
       // On lance la capture dessus
       PcapHandle capture = monInterface.openLive(100, PromiscuousMode.PROMISCUOUS, 10000000);
-      int vitesseDefilement =10;
-      int compteur =0;
 
       while (true) {
         //print(".");
@@ -112,15 +110,16 @@ void capture() {
 
         if (dt.dest.contains("facebook") || dt.dest.contains("fbcdn")) {
           dt.identifiedAs = "facebook";
-          compteur++;
         } else if (dt.dest.contains("1e100")) {
           dt.identifiedAs = "google";
-          compteur++;
         }
 
-        if (dt.identifiedAs != null && dt.identifiedAs != "" && compteur%vitesseDefilement==0) {
-          Packets.add(dt);
-          compteur=0;
+        if (
+          dt != null &&
+          dt.identifiedAs != null &&
+          dt.identifiedAs != ""
+        ) {
+          packets.add(dt);
         }
       }
     } 

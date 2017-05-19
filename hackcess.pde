@@ -1,4 +1,5 @@
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 
 // TYPOGRAPHIES
 PFont mixMonoReg;
@@ -38,7 +39,8 @@ int facteurReductionOpacite=10;
 ArrayList<String> messagesPart1 = new ArrayList(); // correspond aux prénoms
 ArrayList<String> messagesPart2 = new ArrayList(); // correspond aux phrases écrites
 
-ConcurrentLinkedQueue<DetectedTraffic> Packets;
+ConcurrentLinkedQueue<DetectedTraffic> packets;
+Map<String, Boolean> recentConnections;
 
 void settings() {
   //On place la fonction size dans settings au lieu de setup afin de pouvoir utiliser des variables comme paramètres
@@ -47,7 +49,12 @@ void settings() {
 }
 
 void setup() {
-  Packets = new ConcurrentLinkedQueue<DetectedTraffic>();
+  packets = new ConcurrentLinkedQueue<DetectedTraffic>();
+  recentConnections = ExpiringMap.builder()
+    .maxSize(1024)
+    .expiration(5, TimeUnit.SECONDS)
+    .build();
+  
   hostnameToSentences.put("twitter", Twitter);
   hostnameToSentences.put("facebook", Facebook);
   hostnameToSentences.put("google", Twitter);
@@ -66,10 +73,7 @@ void setup() {
 }
 
 void draw() {
-  DetectedTraffic dt = Packets.poll();
-  if (dt != null) {
-    addMessage(dt);
-  }
+  fetchMessages(packets, recentConnections);
 
   displayMessages();
   topBar();

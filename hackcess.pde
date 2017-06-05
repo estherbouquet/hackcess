@@ -11,11 +11,11 @@ final int FRAMEHEIGHT = 1800;
 
 /*On donne les bornes de l'intervalle dans lequel peut se situer la taille 
  de la police de la seconde partie du message*/
-final int MINFONT=30;
-final int MAXFONT=40;
+final int MINFONT=45;
+final int MAXFONT=55;
 
 // VARIABLES FLUX DE TEXTE
-int messageStartX = 15;
+int messageStartX = 20;
 int messageStartY = FRAMEHEIGHT-70-2*MAXFONT;
 int e = 5;
 
@@ -24,13 +24,13 @@ float angle = 0.00;
 float speed = 0.04;
 
 //VARIABLES COULEURS
-color c1 = color (70, 100, 217); // couleur background
-color c2 = color(231, 205, 112); // couleur flux de texte
+color c1 = color (255,172,164); // couleur background
+color c2 = color(0); // couleur flux de texte
 color c3 = color(255); // couleur [HACK/CESS] + cercle
 
-int c2R=231;
-int c2G=205;
-int c2B=112;
+int c2R=0;
+int c2G=0;
+int c2B=0;
 
 //Jouer avec l'opacité de départ et le facteur de réduction afin d'obtenir l'effet désiré
 int c2Alpha=255;
@@ -110,7 +110,7 @@ void displayMessages() { // fonction refreshScreen()
   }
 
   //barre du bas
-  noStroke();
+/*  noStroke();
   fill(c2);
   rect(0, height-100, width, 100);
-}
+*/}

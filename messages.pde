@@ -39,7 +39,7 @@ void addMessage(DetectedTraffic dt) { //fonction message()
   int selectedSentence = int(random(hostnameToSentences.get(dt.identifiedAs).length));  
   //cf feuille ligne décomposée
 
-  String messageSentence = "« "+hostnameToSentences.get(dt.identifiedAs)[selectedSentence]+" »"; // on crée un messageSentence avec la phrase sélectionnée du tableau correspond au hostname détecté
+  String messageSentence = hostnameToSentences.get(dt.identifiedAs)[selectedSentence]; // on crée un messageSentence avec la phrase sélectionnée du tableau correspond au hostname détecté
   
   messagesPart1.add(messageSubject); //on divise le message en 2. Part1=le prénom
   if (messagesPart1.size()>20) { //si le nombre total d'éléments dans l'ArrayList est > à 20 éléments

@@ -7,7 +7,7 @@ PFont mixMonoXBold;
 
 // TAILLE FENETRE
 final int FRAMEWIDTH = 700;
-final int FRAMEHEIGHT = 1800;
+final int FRAMEHEIGHT = 700;
 
 /*On donne les bornes de l'intervalle dans lequel peut se situer la taille 
  de la police de la seconde partie du message*/
@@ -44,8 +44,8 @@ Map<String, Boolean> recentConnections;
 
 void settings() {
   //On place la fonction size dans settings au lieu de setup afin de pouvoir utiliser des variables comme paramètres
-  fullScreen();
-  //size(FRAMEWIDTH, FRAMEHEIGHT); // taille fenêtre
+  //fullScreen();
+  size(FRAMEWIDTH, FRAMEHEIGHT); // taille fenêtre
 }
 
 void setup() {
@@ -57,8 +57,11 @@ void setup() {
   
   hostnameToSentences.put("twitter", Twitter);
   hostnameToSentences.put("facebook", Facebook);
-  hostnameToSentences.put("google", Twitter);
-
+  hostnameToSentences.put("google", Google);
+  hostnameToSentences.put("news", Information);
+  hostnameToSentences.put("insta", Instagram);
+  hostnameToSentences.put("weather", Meteo);
+  
   String test = "@project_hackcess";
   println(test.length());
   background(c1); //car sinon chargement d'un fond gris pas beau

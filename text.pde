@@ -49,7 +49,7 @@ String[] Meteo={
   "Pas trop chaud ?", "Le temps est au beau fixe ?", "Il fera beau donc ?", "Inutile de checker, il pleut toujours dans la ville d'Inverness..."
 };
 
-String[] Informations={
+String[] Information={
   "Quoi de neuf dans le monde ?", "Quelles sont les news du moment ?", "Quelles sont les nouvelles ?", "Quelles sont les informations en ce moment ?", "Connexion aux informations",
   "Quoi de neuf en France ?", "Quelles sont les informations aujourd'hui ?", "Quels sont les derniers articles parus ?", "L'info en direct !", "What's up ?"
 };

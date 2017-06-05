@@ -55,7 +55,7 @@ String getCanonical(InetAddress ip) {
   if (canonical != null) return canonical;
 
   toResolve.add(ip);
-  return "";
+  return ""+ip;
 }
 
 DetectedTraffic getBaseDetection(Packet packet) {
@@ -93,7 +93,7 @@ void capture() {
       }
 
       // On récupère l'interface qui nous intéresse
-      PcapNetworkInterface monInterface = listeInterfacesReseaux.get(4);
+      PcapNetworkInterface monInterface = listeInterfacesReseaux.get(3);
 
       //PcapNetworkInterface monInterface = Pcaps.getDevByName("enp3s0f1");
 
@@ -106,13 +106,23 @@ void capture() {
         Packet packet = capture.getNextPacketEx();
         DetectedTraffic dt = getBaseDetection(packet);
         if (dt == null) continue;
-        //println(dt.src);
-
-        if (dt.dest.contains("facebook") || dt.dest.contains("fbcdn")) {
+        println("dt.src: "+dt.src);
+        println("dt.dest: "+dt.dest);
+        if (dt.dest.contains("instagram") || dt.dest.contains("179.60.192.52")){
+         dt.identifiedAs = "insta"; 
+        } else if (dt.dest.contains("facebook") || dt.dest.contains("fbcdn")) {
           dt.identifiedAs = "facebook";
         } else if (dt.dest.contains("1e100")) {
           dt.identifiedAs = "google";
-        }
+        } else if (dt.dest.contains("104.244.42")){
+          dt.identifiedAs = "twitter";
+        } else if (dt.dest.contains("23.201.196.246")){
+          dt.identifiedAs = "weather";
+        } //else if (dt.dest.contains("93.184.220.20")){
+          //dt.identifiedAs = "news";
+        //}
+        
+        
 
         if (
           dt != null &&

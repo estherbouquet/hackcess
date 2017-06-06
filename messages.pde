@@ -29,6 +29,8 @@ void addMessage(DetectedTraffic dt) { //fonction message()
       messageSubject = "Jonathan";
     } else {
       int selection = int(random(Subjects.size())); // on crée un int appelé subject qui a une valeur comprise entre 0 et la longueur du tableau
+      totalConnexions++;
+      println("addMessage - ceci est le nombre de personnes connectées au total :"+totalConnexions);
       messageSubject = Subjects.get(selection); // on crée un messageSubject avec subject
       Subjects.remove(messageSubject);
       ipToSubject.put(dt.src, messageSubject);

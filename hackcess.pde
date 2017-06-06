@@ -24,13 +24,16 @@ float angle = 0.00;
 float speed = 0.04;
 
 //VARIABLES COULEURS
-color c1 = color (255,172,164); // couleur background
+color c1 = color (255, 172, 164); // couleur background
 color c2 = color(0); // couleur flux de texte
 color c3 = color(255); // couleur [HACK/CESS] + cercle
 
 int c2R=0;
 int c2G=0;
 int c2B=0;
+
+// variable pour déterminer nombre de personnes qui ont été connectées au total
+int totalConnexions=0;
 
 //Jouer avec l'opacité de départ et le facteur de réduction afin d'obtenir l'effet désiré
 int c2Alpha=255;
@@ -54,14 +57,14 @@ void setup() {
     .maxSize(1024)
     .expiration(5, TimeUnit.SECONDS)
     .build();
-  
+
   hostnameToSentences.put("twitter", Twitter);
   hostnameToSentences.put("facebook", Facebook);
   hostnameToSentences.put("google", Google);
   hostnameToSentences.put("news", Information);
   hostnameToSentences.put("insta", Instagram);
   hostnameToSentences.put("weather", Meteo);
-  
+
   String test = "@project_hackcess";
   println(test.length());
   background(c1); //car sinon chargement d'un fond gris pas beau
@@ -113,7 +116,8 @@ void displayMessages() { // fonction refreshScreen()
   }
 
   //barre du bas
-/*  noStroke();
-  fill(c2);
-  rect(0, height-100, width, 100);
-*/}
+  /*  noStroke();
+   fill(c2);
+   rect(0, height-100, width, 100);
+   */
+}

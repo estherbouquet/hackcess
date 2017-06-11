@@ -93,7 +93,7 @@ void capture() {
       }
 
       // On récupère l'interface qui nous intéresse
-      PcapNetworkInterface monInterface = listeInterfacesReseaux.get(3);
+      PcapNetworkInterface monInterface = listeInterfacesReseaux.get(4);
 
       //PcapNetworkInterface monInterface = Pcaps.getDevByName("enp3s0f1");
 

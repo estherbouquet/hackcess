@@ -6,8 +6,8 @@ PFont mixMonoReg;
 PFont mixMonoXBold;
 
 // TAILLE FENETRE
-final int FRAMEWIDTH = 700;
-final int FRAMEHEIGHT = 700;
+final int FRAMEWIDTH = 1080;
+final int FRAMEHEIGHT = 1920;
 
 /*On donne les bornes de l'intervalle dans lequel peut se situer la taille 
  de la police de la seconde partie du message*/
@@ -15,7 +15,7 @@ final int MINFONT=45;
 final int MAXFONT=55;
 
 // VARIABLES FLUX DE TEXTE
-int messageStartX = 20;
+int messageStartX = 50;
 int messageStartY = FRAMEHEIGHT-70-2*MAXFONT;
 int e = 5;
 
@@ -24,7 +24,7 @@ float angle = 0.00;
 float speed = 0.04;
 
 //VARIABLES COULEURS
-color c1 = color (255, 172, 164); // couleur background
+color c1 = color (242, 242, 242); // couleur background
 color c2 = color(0); // couleur flux de texte
 color c3 = color(255); // couleur [HACK/CESS] + cercle
 
@@ -37,7 +37,7 @@ int totalConnexions=0;
 
 //Jouer avec l'opacité de départ et le facteur de réduction afin d'obtenir l'effet désiré
 int c2Alpha=255;
-int facteurReductionOpacite=10;
+int facteurReductionOpacite=17;
 
 ArrayList<String> messagesPart1 = new ArrayList(); // correspond aux prénoms
 ArrayList<String> messagesPart2 = new ArrayList(); // correspond aux phrases écrites
@@ -47,8 +47,8 @@ Map<String, Boolean> recentConnections;
 
 void settings() {
   //On place la fonction size dans settings au lieu de setup afin de pouvoir utiliser des variables comme paramètres
-  //fullScreen();
-  size(FRAMEWIDTH, FRAMEHEIGHT); // taille fenêtre
+  fullScreen();
+  //size(FRAMEWIDTH, FRAMEHEIGHT); // taille fenêtre
 }
 
 void setup() {

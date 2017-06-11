@@ -33,12 +33,12 @@ String[] Facebook={
   "Je demande la connexion vers www.facebook.com", "Je souhaiterais actualiser ma TimeLine", "Je voudrais charger les notifications s'il vous plait !", 
   "Je voudrais joindre l'URL de Facebook !", "Une nouvelle identification ?", "De nouvelles publications !", "Je peux aller sur Facebook ?",
   "Quoi de neuf sur l'application Facebook ?", "Ok, je lance l'application Facebook", "Est-ce que j'ai de nouveaux amis ?", "Permission requise pour aller sur Facebook",
-  "Connexion permise", "Autentification requise !", "Je voudrais charger les derniers posts !"
+  "Connexion permise", "Authentification requise pour accéder à Facebook !", "Je voudrais charger les derniers posts !"
 };
 
 String[] Instagram={
   "Je demande une connexion vers Instagram via l'application !", "Je peux me connecter sur Instagram ?", "Je souhaite me connecter via le port #265", 
-  "Je lance l'app Instagram", "Je peux charger les nouvelles storys ?", "#Connexion #Instagram #Soutenance #Smile", "Je souhaite naviguer vers mon compte Instagram", 
+  "Je lance l'app Instagram", "Je peux charger les nouvelles stories ?", "#Connexion #Instagram #Soutenance #Ça marche !", "Je souhaite naviguer vers mon compte Instagram", 
   "", "", "", "",
   "", "", "", ""
 }; //on crée un tableau de String qui regroupe toutes les phrases pour connexion à Twitter
@@ -55,7 +55,7 @@ String[] Information={
 };
 
 String[] Google={
-  "Lancement d'une nouvelle recherche !", "ras 2", "ras 3", "ras 4", "ras 5", "ras 6",
+  "Lancement d'une nouvelle recherche via Google !", "ras 2", "ras 3", "ras 4", "ras 5", "ras 6",
   "ras 7", "ras 8", "ras 9", "ras 10", "ras 11", "ras 12",
    "ras 13", "ras 14", "ras 15", "ras 16", "ras 17", "ras 18",
 };
